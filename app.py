@@ -49,6 +49,7 @@ class Message(ft.Row):
 
 async def main(page: ft.Page):
     page.title = "nstk gpt"
+    page.favicon = "favicon.ico"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
 
@@ -190,4 +191,4 @@ async def main(page: ft.Page):
     )
 
 port = int(os.environ.get("PORT", 8000))
-ft.app(target = main, view = ft.WEB_BROWSER, port = port)
+ft.app(target = main, assets_dir = "assets", view = ft.WEB_BROWSER, port = port)
