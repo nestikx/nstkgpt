@@ -51,7 +51,7 @@ async def main(page: ft.Page):
     page.title = "nstk gpt"
     page.favicon = "favicon.ico"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
+    page.fonts = {"PollyRounded-Bold": "PollyRounded-Bold.ttf"}
 
     async def gpt_question(message: str):
         answer = await asyncio.to_thread(gpt.question, message)
@@ -111,7 +111,7 @@ async def main(page: ft.Page):
     )
 
     send_icon = ft.Image(
-        src = "image/send_duotone.svg",
+        src = "send_duotone.svg",
         scale = 1.4,
         color = ft.Colors.ON_PRIMARY_CONTAINER,
         animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE)
@@ -191,4 +191,4 @@ async def main(page: ft.Page):
     )
 
 port = int(os.environ.get("PORT", 8000))
-ft.app(target = main, assets_dir = "assets", view = ft.WEB_BROWSER, port = port)
+ft.app(target = main, view = ft.WEB_BROWSER, port = port)
