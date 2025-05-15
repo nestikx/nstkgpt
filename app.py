@@ -1,5 +1,6 @@
 import flet as ft
 import asyncio
+import os
 import gpt
 
 
@@ -188,5 +189,5 @@ async def main(page: ft.Page):
         )
     )
 
-if __name__ == "__main__":
-    ft.app(target = main) # ft.app(target = main, view = ft.WEB_BROWSER, port = 2496)
+port = int(os.environ.get("PORT", 8000))
+ft.app(target = main, view = ft.WEB_BROWSER, port = port)
