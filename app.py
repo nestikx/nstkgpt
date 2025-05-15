@@ -50,7 +50,7 @@ class Message(ft.Row):
 async def main(page: ft.Page):
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.fonts = {"PollyRounded-Bold": "assets/fonts/PollyRounded-Bold.ttf"}
+    page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
 
     async def gpt_question(message: str):
         answer = await asyncio.to_thread(gpt.question, message)
@@ -110,7 +110,7 @@ async def main(page: ft.Page):
     )
 
     send_icon = ft.Image(
-        src = "assets/image/send_duotone.svg",
+        src = "image/send_duotone.svg",
         scale = 1.4,
         color = ft.Colors.ON_PRIMARY_CONTAINER,
         animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE)
