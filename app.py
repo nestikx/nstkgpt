@@ -119,7 +119,8 @@ async def main(page: ft.Page):
         border_radius = 50,
         multiline = True,
         border_color = "transparent",
-        bgcolor = ft.Colors.SURFACE
+        bgcolor = ft.Colors.SURFACE,
+        expand = True
     )
 
     chat = ft.Container(
@@ -148,7 +149,8 @@ async def main(page: ft.Page):
                     bgcolor = ft.Colors.SURFACE,
                     on_click = click_send
                 )
-            ]
+            ],
+            width = 350
         ),
         margin = 20,
         padding = 20,
@@ -174,15 +176,10 @@ async def main(page: ft.Page):
                 ),
 
                 chat,
-
-                ft.Row(
-                    [
-                        panel
-                    ],
-                    alignment = ft.MainAxisAlignment.CENTER
-                )
+                panel
             ],
             alignment = ft.MainAxisAlignment.SPACE_BETWEEN,
+            horizontal_alignment = ft.CrossAxisAlignment.CENTER,
             expand = True
         )
     )
