@@ -34,7 +34,6 @@ class Message(ft.Row):
                 ft.Text(
                     value = message,
                     size = variants[2][person],
-                    font_family = "PollyRounded-Bold",
                     color = variants[1][person][1],
                     text_align = variants[3][person]
                 ),
@@ -49,9 +48,9 @@ class Message(ft.Row):
 
 async def main(page: ft.Page):
     page.title = "nstk gpt"
-    page.favicon = "favicon.ico"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.fonts = {"PollyRounded-Bold": "PollyRounded-Bold.ttf"}
+    page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
+    page.theme = ft.Theme(font_family = "PollyRounded-Bold")
 
     async def gpt_question(message: str):
         answer = await asyncio.to_thread(gpt.question, message)
@@ -92,14 +91,12 @@ async def main(page: ft.Page):
     
     title_text = ft.Text(
         value = "nstk gpt",
-        size = 32,
-        font_family = "PollyRounded-Bold"
+        size = 32
     )
 
     creator_name = ft.Text(
         value = "by nestik",
-        size = 16,
-        font_family = "PollyRounded-Bold"
+        size = 16
     )
     
     mode_swich = ft.IconButton(
@@ -111,7 +108,7 @@ async def main(page: ft.Page):
     )
 
     send_icon = ft.Image(
-        src = "send_duotone.svg",
+        src = "image/send_duotone.svg",
         scale = 1.4,
         color = ft.Colors.ON_PRIMARY_CONTAINER,
         animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE)
@@ -190,5 +187,5 @@ async def main(page: ft.Page):
         )
     )
 
-port = int(os.environ.get("PORT", 8000))
+port = int(os.environ.get("PORT", 2496))
 ft.app(target = main, view = ft.WEB_BROWSER, port = port)
