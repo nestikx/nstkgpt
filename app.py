@@ -188,4 +188,4 @@ async def main(page: ft.Page):
     )
 
 port = int(os.environ.get("PORT", 2496))
-ft.app(target = main, view = ft.WEB_BROWSER, port = port, assets_dir = "assets")
+ft.app(target = main, view = ft.WEB_BROWSER, port = port)
