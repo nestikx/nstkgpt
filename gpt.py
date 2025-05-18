@@ -1,9 +1,8 @@
 from g4f.client import Client
 
 client = Client()
-messages = []
 
-def question(message: str) -> str:
+def question(message: str, messages: list) -> str:
     messages.append({"role": "user", "content": message})
 
     response = client.chat.completions.create(
