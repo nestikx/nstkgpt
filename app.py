@@ -3,6 +3,7 @@ import asyncio
 import os
 import gpt
 
+messages = []
 
 class Message(ft.Row):
     def __init__(self, message: str, person: str):
@@ -38,7 +39,7 @@ class Message(ft.Row):
                     text_align = variants[3][person]
                 ),
                 padding = 10,
-                border_radius = 10,
+                border_radius = 20,
                 bgcolor = variants[1][person][0],
                 expand = True,
                 expand_loose = True
@@ -53,40 +54,41 @@ async def main(page: ft.Page):
     page.theme = ft.Theme(font_family = "PollyRounded-Bold")
 
     async def gpt_question(message: str):
-        answer = await asyncio.to_thread(gpt.question, message)
+        answer = await asyncio.to_thread(gpt.question, message, messages)
 
-        chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
         chat.content.controls.append(Message(answer, "bot"))
+        chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
 
         page.update()
 
-    async def click_send(event: ft.ContainerTapEvent):
-        send_icon.scale = 1
+    async def click_send(event):
+        send_button.content.scale = 1
         page.update()
 
         await asyncio.sleep(0.1)
 
-        send_icon.scale = 1.4
+        send_button.content.scale = 1.4
         page.update()
 
         if message_field.value != "":
-            chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
             chat.content.controls.append(Message(message_field.value, "me"))
-            
+            chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
+
             message = message_field.value
             message_field.value = ""
             
             page.update()
             await gpt_question(message)
-    
 
     def toggle_theme(e):
         if page.theme_mode == ft.ThemeMode.LIGHT:
             page.theme_mode = ft.ThemeMode.DARK
             mode_swich.icon = ft.Icons.SUNNY
+        
         else:
             page.theme_mode = ft.ThemeMode.LIGHT
             mode_swich.icon = ft.Icons.NIGHTLIGHT_ROUNDED
+        
         page.update()
     
     title_text = ft.Text(
@@ -107,33 +109,39 @@ async def main(page: ft.Page):
         on_click = toggle_theme
     )
 
-    send_icon = ft.Image(
-        src = "image/send_duotone.svg",
-        scale = 1.4,
-        color = ft.Colors.ON_PRIMARY_CONTAINER,
-        animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE)
+    send_button = ft.Container(
+        ft.Image(
+            src = "image/send_duotone.svg",
+            scale = 1.4,
+            color = ft.Colors.ON_PRIMARY_CONTAINER,
+            animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE)
+        ),
+        ink = True,
+        padding = 12,
+        border_radius = 40,
+        bgcolor = ft.Colors.SURFACE,
+        on_click = click_send
     )
 
     message_field = ft.TextField(
         hint_text = "Enter message",
-        border_radius = 50,
-        multiline = True,
         border_color = "transparent",
         bgcolor = ft.Colors.SURFACE,
+        border_radius = 50,
+        multiline = True,
         expand = True
     )
 
     chat = ft.Container(
         ft.Column(
             [
-                Message("active model gpt-4o\nthis version of the program is unstable!", "system")
+                Message("active model gpt-4o\napp is unstable!", "system")
             ],
             scroll = ft.ScrollMode.AUTO
         ),
-        margin = 20,
+        margin = 10,
         padding = 20,
         border_radius = 25,
-        bgcolor = ft.Colors.SURFACE_CONTAINER_HIGHEST,
         expand = True
     )
 
@@ -141,14 +149,7 @@ async def main(page: ft.Page):
         ft.Row(
             [
                 message_field,
-                ft.Container(
-                    send_icon,
-                    ink = True,
-                    padding = 12,
-                    border_radius = 40,
-                    bgcolor = ft.Colors.SURFACE,
-                    on_click = click_send
-                )
+                send_button
             ],
             width = 350
         ),
@@ -184,5 +185,6 @@ async def main(page: ft.Page):
         )
     )
 
-port = int(os.environ.get("PORT", 2496))
-ft.app(target = main, view = ft.WEB_BROWSER, port = port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 2496))
+    ft.app(target = main, view = ft.WEB_BROWSER, port = port)
