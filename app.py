@@ -1,6 +1,8 @@
 import flet as ft
 import asyncio
 import os
+
+import error
 import gpt
 
 messages = []
@@ -71,20 +73,23 @@ async def main(page: ft.Page):
         page.update()
 
         if message_field.value != "":
-            chat.content.controls.append(Message(message_field.value, "me"))
-            chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
+            if message_field.value == "error.null":
+                page.controls.clear()
+                error.main(page)
+            else:
+                chat.content.controls.append(Message(message_field.value, "me"))
+                chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
 
-            message = message_field.value
-            message_field.value = ""
-            
-            page.update()
-            await gpt_question(message)
+                message = message_field.value
+                message_field.value = ""
+                
+                page.update()
+                await gpt_question(message)
 
     def toggle_theme(e):
         if page.theme_mode == ft.ThemeMode.LIGHT:
             page.theme_mode = ft.ThemeMode.DARK
             mode_swich.icon = ft.Icons.SUNNY
-        
         else:
             page.theme_mode = ft.ThemeMode.LIGHT
             mode_swich.icon = ft.Icons.NIGHTLIGHT_ROUNDED
@@ -185,6 +190,5 @@ async def main(page: ft.Page):
         )
     )
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 2496))
-    ft.app(target = main, view = ft.WEB_BROWSER, port = port)
+port = int(os.environ.get("PORT", 2496))
+ft.app(target = main, view = ft.WEB_BROWSER, port = port)
