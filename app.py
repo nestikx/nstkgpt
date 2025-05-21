@@ -74,7 +74,7 @@ async def main(page: ft.Page):
         send_button.content.scale = 1.4
         page.update()
 
-        if message_field.value != "":
+        if message_field.value.strip() != "":
             if message_field.value == "error.null":
                 page.controls.clear()
                 error.main(page)
