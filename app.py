@@ -5,7 +5,6 @@ import os
 import error
 import gpt
 
-messages = []
 
 class Message(ft.Row):
     def __init__(self, message: str, person: str):
@@ -49,11 +48,14 @@ class Message(ft.Row):
         ]
         self.alignment = variants[0][person]
 
+
 async def main(page: ft.Page):
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
     page.theme = ft.Theme(font_family = "PollyRounded-Bold")
+    
+    messages = []
 
     async def gpt_question(message: str):
         answer = await asyncio.to_thread(gpt.question, message, messages)
