@@ -1,2 +1,2 @@
 # nstk gpt
-Program for using free GPT
+free gpt
