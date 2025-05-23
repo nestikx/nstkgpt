@@ -42,6 +42,8 @@ class Message(ft.Row):
                 padding = 10,
                 border_radius = 20,
                 bgcolor = variants[1][person][0],
+                scale = 1,
+                animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE),
                 expand = True,
                 expand_loose = True
             )
@@ -52,6 +54,7 @@ class Message(ft.Row):
 async def main(page: ft.Page):
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
+    page.bgcolor = ft.Colors.SURFACE
     page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
     page.theme = ft.Theme(font_family = "PollyRounded-Bold")
     
@@ -62,7 +65,12 @@ async def main(page: ft.Page):
 
         chat.content.controls.append(Message(answer, "bot"))
         chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
+        chat.content.controls[-1].controls[0].scale = 0
+        page.update()
 
+        await asyncio.sleep(0.1)
+
+        chat.content.controls[-1].controls[0].scale = 1
         page.update()
 
     async def click_send(event):
@@ -81,6 +89,13 @@ async def main(page: ft.Page):
             else:
                 chat.content.controls.append(Message(message_field.value, "me"))
                 chat.content.scroll_to(offset = -1, duration = 200, curve = ft.AnimationCurve.EASE)
+                chat.content.controls[-1].controls[0].scale = 0
+                page.update()
+
+                await asyncio.sleep(0.1)
+                
+                chat.content.controls[-1].controls[0].scale = 1
+                page.update()
 
                 message = message_field.value
                 message_field.value = ""
@@ -112,7 +127,7 @@ async def main(page: ft.Page):
         icon = ft.Icons.SUNNY,
         icon_size = 30,
         icon_color = ft.Colors.ON_PRIMARY_CONTAINER,
-        animate_scale = ft.Animation(duration = 5000, curve = ft.AnimationCurve.EASE),
+        animate_scale = ft.Animation(duration = 200, curve = ft.AnimationCurve.EASE),
         on_click = toggle_theme
     )
 
@@ -139,6 +154,23 @@ async def main(page: ft.Page):
         expand = True
     )
 
+    panel = ft.Container(
+        ft.Row(
+            [
+                title_text,
+                ft.Row(
+                    [
+                        creator_name,
+                        mode_swich
+                    ],
+                    alignment = ft.MainAxisAlignment.END
+                )
+            ],
+            alignment = ft.MainAxisAlignment.SPACE_BETWEEN
+        ),
+        margin = 10
+    )
+
     chat = ft.Container(
         ft.Column(
             [
@@ -146,13 +178,10 @@ async def main(page: ft.Page):
             ],
             scroll = ft.ScrollMode.AUTO
         ),
-        margin = 10,
-        padding = 20,
-        border_radius = 25,
         expand = True
     )
 
-    panel = ft.Container(
+    messbox = ft.Container(
         ft.Row(
             [
                 message_field,
@@ -169,22 +198,9 @@ async def main(page: ft.Page):
     page.add(
         ft.Column(
             [
-                ft.Row(
-                    [
-                        title_text,
-                        ft.Row(
-                            [
-                                creator_name,
-                                mode_swich
-                            ],
-                            alignment = ft.MainAxisAlignment.END
-                        )
-                    ],
-                    alignment = ft.MainAxisAlignment.SPACE_BETWEEN
-                ),
-
+                panel,
                 chat,
-                panel
+                messbox
             ],
             alignment = ft.MainAxisAlignment.SPACE_BETWEEN,
             horizontal_alignment = ft.CrossAxisAlignment.CENTER,
