@@ -55,8 +55,11 @@ async def main(page: ft.Page):
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = ft.Colors.SURFACE
-    page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
-    page.theme = ft.Theme(font_family = "PollyRounded-Bold")
+    page.fonts = {
+        "Nunito-Bold": "fonts/Nunito-Bold.ttf",
+        "PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"
+    }
+    page.theme = ft.Theme(font_family = "Nunito-Bold")
     
     messages = []
 
@@ -115,11 +118,13 @@ async def main(page: ft.Page):
     
     title_text = ft.Text(
         value = "nstk gpt",
+        font_family = "PollyRounded-Bold",
         size = 32
     )
 
     creator_name = ft.Text(
         value = "by nestik",
+        font_family = "PollyRounded-Bold",
         size = 16
     )
     
