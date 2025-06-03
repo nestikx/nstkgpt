@@ -2,8 +2,7 @@ import flet as ft
 import asyncio
 import os
 
-import error
-import gpt
+import gpt, error, anticlose
 
 
 class Message(ft.Row):
@@ -52,6 +51,7 @@ class Message(ft.Row):
 
 
 async def main(page: ft.Page):
+    await asyncio.to_thread(anticlose.run)
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = ft.Colors.SURFACE
@@ -212,6 +212,6 @@ async def main(page: ft.Page):
             expand = True
         )
     )
-
-port = int(os.environ.get("PORT", 2496))
-ft.app(target = main, view = ft.WEB_BROWSER, port = port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 2496))
+    ft.app(target = main, view = ft.WEB_BROWSER, port = port)
