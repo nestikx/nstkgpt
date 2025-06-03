@@ -9,7 +9,7 @@ error_text = """
 """
 
 def main(page: ft.Page):
-    page.title = "error"
+    page.title = "null"
     page.bgcolor = ft.Colors.BLUE_ACCENT_700
     page.fonts = {"PollyRounded-Bold": "fonts/PollyRounded-Bold.ttf"}
     page.theme = ft.Theme(font_family = "PollyRounded-Bold")
@@ -20,12 +20,12 @@ def main(page: ft.Page):
                 [
                     ft.Text(
                         value = " :(",
-                        size = 148,
+                        size = 160,
                         color = "white"
                     ),
                     ft.Text(
                         value = error_text,
-                        size = 20,
+                        size = 24,
                         color = "white"
                     )
                 ],
