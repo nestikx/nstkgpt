@@ -2,8 +2,7 @@ import flet as ft
 import asyncio
 import os
 
-import gpt, error, anticlose
-
+import gpt, error
 
 class Message(ft.Row):
     def __init__(self, message: str, person: str):
@@ -51,7 +50,6 @@ class Message(ft.Row):
 
 
 async def main(page: ft.Page):
-    await asyncio.to_thread(anticlose.run)
     page.title = "nstk gpt"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = ft.Colors.SURFACE
